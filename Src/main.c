@@ -4,7 +4,7 @@
   * Description        : Main program body
   ******************************************************************************
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * COPYRIGHT(c) 2019 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -45,8 +45,9 @@ typedef void (*pFunction)(void);
 
 // Flash configuration
 #define MAIN_PROGRAM_START_ADDRESS              (uint32_t)0x08002000
+#define BOOTLOADER_PROGRAM_START_ADDRESS        (uint32_t)0x08000000
 #define MAIN_PROGRAM_PAGE_NUMBER                8
-#define NUM_OF_PAGES                            (64 - MAIN_PROGRAM_PAGE_NUMBER)
+#define NUM_OF_PAGES                            (64)
 
 // CAN identifiers
 #define DEVICE_CAN_ID                            0x78E
@@ -56,7 +57,6 @@ typedef void (*pFunction)(void);
 
 #define CAN_RESP_OK                              0x01
 #define CAN_RESP_ERROR                          0x02
-
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -106,13 +106,13 @@ void TransmitResponsePacket(uint8_t response)
   hcan.pTxMsg->StdId = DEVICE_CAN_ID;
   hcan.pTxMsg->DLC = 1;
   hcan.pTxMsg->Data[0] = response;
-  HAL_CAN_Transmit_IT(&hcan);
+  HAL_CAN_Transmit(&hcan,1);
 }
 
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
 {
   // Skip messages not intended for our device
-  if (CanHandle->pRxMsg->StdId != DEVICE_CAN_ID) {
+  if (CanHandle->pRxMsg->StdId != DEVICE_CAN_ID && CanHandle->pRxMsg->ExtId != DEVICE_CAN_ID) {
     HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
     return;
   }
@@ -127,24 +127,25 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
     if (PageBufferPtr == FLASH_PAGE_SIZE) {
       HAL_NVIC_DisableIRQ(USB_LP_CAN1_RX0_IRQn);
 
-      HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
+      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
       uint32_t crc = HAL_CRC_Calculate(&hcrc, (uint32_t*)PageBuffer, FLASH_PAGE_SIZE / 4);
 
-      if (crc == PageCRC && PageIndex <= NUM_OF_PAGES)
+      //if (crc == PageCRC && PageIndex <= NUM_OF_PAGES)
+			if (PageIndex <= NUM_OF_PAGES)
       {
         HAL_FLASH_Unlock();
 
         uint32_t PageError = 0;
 
         eraseInitStruct.TypeErase = TYPEERASE_PAGES;
-        eraseInitStruct.PageAddress = MAIN_PROGRAM_START_ADDRESS + PageIndex * FLASH_PAGE_SIZE;
+        eraseInitStruct.PageAddress = BOOTLOADER_PROGRAM_START_ADDRESS + PageIndex * FLASH_PAGE_SIZE;
         eraseInitStruct.NbPages = 1;
 
         HAL_FLASHEx_Erase(&eraseInitStruct, &PageError);
 
         for (int i = 0; i < FLASH_PAGE_SIZE; i += 4)
         {
-          HAL_FLASH_Program(TYPEPROGRAM_WORD, MAIN_PROGRAM_START_ADDRESS + PageIndex * FLASH_PAGE_SIZE + i, *(uint32_t*)&PageBuffer[i]);
+          HAL_FLASH_Program(TYPEPROGRAM_WORD, BOOTLOADER_PROGRAM_START_ADDRESS + PageIndex * FLASH_PAGE_SIZE + i, *(uint32_t*)&PageBuffer[i]);
         }
 
         HAL_FLASH_Lock();
@@ -161,7 +162,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
       HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
     }
 
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
     HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
     return;
   }
@@ -174,9 +175,12 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
       break;
     case CMD_PAGE_PROG:
       if (blState == IDLE) {
+				// очищает страницу
         memset(PageBuffer, 0, FLASH_PAGE_SIZE);
+				//контрольная сумма
         memcpy(&PageCRC, &CanHandle->pRxMsg->Data[2], sizeof(int));
-        PageIndex = CanHandle->pRxMsg->Data[1];
+				// номер страницы
+        PageIndex = CanHandle->pRxMsg->Data[1] + MAIN_PROGRAM_PAGE_NUMBER;
         blState = PAGE_PROG;
         PageBufferPtr = 0;
       } else {
@@ -191,7 +195,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
       break;
   }
 
-  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_6);
+  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 }
 /* USER CODE END 0 */
@@ -233,12 +237,15 @@ int main(void)
   canFilterConfig.BankNumber = 1;
   HAL_CAN_ConfigFilter(&hcan, &canFilterConfig);
 
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
+	//PC13 почему то инверсный
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 
   HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
-  HAL_Delay(1000);
-
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+  HAL_Delay(5000);
+	
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 
   // Timed out waiting for host
   if (blState == WAIT_HOST) {
@@ -251,7 +258,8 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-
+//  TransmitResponsePacket(CAN_RESP_OK);
+//	HAL_Delay(100);
   /* USER CODE BEGIN 3 */
 
   }
@@ -269,13 +277,10 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
+  RCC_OscInitStruct.HSICalibrationValue = 16;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -285,12 +290,12 @@ void SystemClock_Config(void)
     */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();
   }
@@ -312,10 +317,10 @@ static void MX_CAN_Init(void)
 {
 
   hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 4;
+  hcan.Init.Prescaler = 1;
   hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SJW = CAN_SJW_1TQ;
-  hcan.Init.BS1 = CAN_BS1_5TQ;
+  hcan.Init.BS1 = CAN_BS1_9TQ;
   hcan.Init.BS2 = CAN_BS2_6TQ;
   hcan.Init.TTCM = DISABLE;
   hcan.Init.ABOM = DISABLE;
@@ -357,16 +362,26 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PB5 PB6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6;
+  /*Configure GPIO pins : PA11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	
+	  /*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PC13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
 
