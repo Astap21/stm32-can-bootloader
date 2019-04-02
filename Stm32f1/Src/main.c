@@ -64,6 +64,8 @@ CAN_HandleTypeDef hcan;
 
 CRC_HandleTypeDef hcrc;
 
+HAL_StatusTypeDef canTxStatus;
+HAL_StatusTypeDef canRxStatus;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 static CanTxMsgTypeDef        canTxMessage;
@@ -101,12 +103,12 @@ void JumpToApplication()
   JumpAddress();
 }
 
-void TransmitResponsePacket(uint8_t response)
+HAL_StatusTypeDef TransmitResponsePacket(uint8_t response)
 {
   hcan.pTxMsg->StdId = DEVICE_CAN_ID;
   hcan.pTxMsg->DLC = 1;
   hcan.pTxMsg->Data[0] = response;
-  HAL_CAN_Transmit(&hcan,1);
+  return HAL_CAN_Transmit(&hcan,1);
 }
 
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
@@ -258,7 +260,7 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-//  TransmitResponsePacket(CAN_RESP_OK);
+//  canTxStatus = TransmitResponsePacket(CAN_RESP_OK);
 //	HAL_Delay(100);
   /* USER CODE BEGIN 3 */
 

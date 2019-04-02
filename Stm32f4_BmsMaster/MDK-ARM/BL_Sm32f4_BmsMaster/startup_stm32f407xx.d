@@ -1,0 +1,1 @@
+bl_sm32f4_bmsmaster\startup_stm32f407xx.o: startup_stm32f407xx.s

@@ -1,0 +1,28 @@
+--cpu Cortex-M4.fp
+"bl_sm32f4_bmsmaster\startup_stm32f407xx.o"
+"bl_sm32f4_bmsmaster\main.o"
+"bl_sm32f4_bmsmaster\gpio.o"
+"bl_sm32f4_bmsmaster\can.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_it.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_msp.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_can.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_tim.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_tim_ex.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_rcc.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_rcc_ex.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_flash.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_flash_ex.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_flash_ramfunc.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_gpio.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_dma_ex.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_dma.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_pwr.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_pwr_ex.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_cortex.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal.o"
+"bl_sm32f4_bmsmaster\stm32f4xx_hal_exti.o"
+"bl_sm32f4_bmsmaster\system_stm32f4xx.o"
+--library_type=microlib --strict --scatter "BL_Sm32f4_BmsMaster\BL_Sm32f4_BmsMaster.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "BL_Sm32f4_BmsMaster.map" -o BL_Sm32f4_BmsMaster\BL_Sm32f4_BmsMaster.axf

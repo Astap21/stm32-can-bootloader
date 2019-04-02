@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+"pantograf\startup_stm32f103xb.o"
+"pantograf\main.o"
+"pantograf\gpio.o"
+"pantograf\can.o"
+"pantograf\stm32f1xx_it.o"
+"pantograf\stm32f1xx_hal_msp.o"
+"pantograf\stm32f1xx_hal_gpio_ex.o"
+"pantograf\stm32f1xx_hal_can.o"
+"pantograf\stm32f1xx_hal_crc.o"
+"pantograf\stm32f1xx_hal_tim.o"
+"pantograf\stm32f1xx_hal_tim_ex.o"
+"pantograf\stm32f1xx_hal.o"
+"pantograf\stm32f1xx_hal_rcc.o"
+"pantograf\stm32f1xx_hal_rcc_ex.o"
+"pantograf\stm32f1xx_hal_gpio.o"
+"pantograf\stm32f1xx_hal_dma.o"
+"pantograf\stm32f1xx_hal_cortex.o"
+"pantograf\stm32f1xx_hal_pwr.o"
+"pantograf\stm32f1xx_hal_flash.o"
+"pantograf\stm32f1xx_hal_flash_ex.o"
+"pantograf\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "Pantograf\Pantograf.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Pantograf.map" -o Pantograf\Pantograf.axf
