@@ -3,7 +3,7 @@
 <title>Static Call Graph - [BL_Sm32f4_BmsMaster\BL_Sm32f4_BmsMaster.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image BL_Sm32f4_BmsMaster\BL_Sm32f4_BmsMaster.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060183: Last Updated: Tue Apr 02 19:09:11 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060183: Last Updated: Fri Apr 05 11:32:58 2019
 <BR><P>
 <H3>Maximum Stack Usage =        208 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -870,7 +870,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DeInit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
+<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
 <P><STRONG><a name="[9d]"></a>MX_CAN2_Init</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, can.o(i.MX_CAN2_Init))
@@ -882,8 +883,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9f]"></a>MX_GPIO_Init</STRONG> (Thumb, 116 bytes, Stack size 40 bytes, gpio.o(i.MX_GPIO_Init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = MX_GPIO_Init &rArr; HAL_GPIO_Init
+<P><STRONG><a name="[9f]"></a>MX_GPIO_Init</STRONG> (Thumb, 146 bytes, Stack size 48 bytes, gpio.o(i.MX_GPIO_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = MX_GPIO_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
@@ -910,13 +911,12 @@ Global Symbols
 <P><STRONG><a name="[5c]"></a>SystemInit</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, system_stm32f4xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[7f]"></a>TransmitResponsePacket</STRONG> (Thumb, 48 bytes, Stack size 40 bytes, main.o(i.TransmitResponsePacket))
+<P><STRONG><a name="[7f]"></a>TransmitResponsePacket</STRONG> (Thumb, 52 bytes, Stack size 40 bytes, main.o(i.TransmitResponsePacket))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = TransmitResponsePacket &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_AddTxMessage
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
+<BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
 <P><STRONG><a name="[b4]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
@@ -925,7 +925,7 @@ Global Symbols
 
 <P><STRONG><a name="[b6]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
-<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 82 bytes, Stack size 40 bytes, main.o(i.main))
+<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 136 bytes, Stack size 40 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_RCC_GetSysClockFreq &rArr; __aeabi_uldivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
@@ -935,8 +935,8 @@ Global Symbols
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ConfigFilter
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ActivateNotification
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TransmitResponsePacket
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JumpToApplication
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL><P>
