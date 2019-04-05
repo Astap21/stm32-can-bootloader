@@ -32,7 +32,7 @@
 #define PAGE_PROG    2
 
 // Flash configuration
-#define MAIN_PROGRAM_START_ADDRESS              (uint32_t)0x08002000
+#define MAIN_PROGRAM_START_ADDRESS              (uint32_t)0x08004000
 #define BOOTLOADER_PROGRAM_START_ADDRESS        (uint32_t)0x08000000
 #define MAIN_PROGRAM_PAGE_NUMBER                8
 #define NUM_OF_PAGES                            (64)
@@ -140,23 +140,18 @@ int main(void)
   sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
   sFilterConfig.FilterIdHigh = 0x0000;
   sFilterConfig.FilterIdLow = 0x0000;
-  sFilterConfig.FilterMaskIdHigh = 0x0000 << 5;
+  sFilterConfig.FilterMaskIdHigh = 0x0000;
   sFilterConfig.FilterMaskIdLow = 0x0000;
   sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
   sFilterConfig.FilterActivation = ENABLE;
-  sFilterConfig.SlaveStartFilterBank = 13;
   HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig);
 
 	HAL_CAN_Start(&hcan2);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_RX_FIFO0_MSG_PENDING);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_ERROR_WARNING);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_ERROR_PASSIVE);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_BUSOFF);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_LAST_ERROR_CODE);
-	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_ERROR);             
+	HAL_CAN_ActivateNotification(&hcan2,CAN_IT_RX_FIFO0_MSG_PENDING);            
 
+  HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_SET);
   HAL_Delay(500);
-	
+	HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_RESET);
 
   // Timed out waiting for host
   if (blState == WAIT_HOST) {
@@ -301,7 +296,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 
         HAL_FLASHEx_Erase(&eraseInitStruct, &PageError);
 
-        for (int i = 0; i < FLASH_PAGE_SIZE; i += 4)
+        for (uint32_t i = 0; i < FLASH_PAGE_SIZE; i += 4)
         {
           HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, BOOTLOADER_PROGRAM_START_ADDRESS + PageIndex * FLASH_PAGE_SIZE + i, *(uint32_t*)&PageBuffer[i]);
         }
