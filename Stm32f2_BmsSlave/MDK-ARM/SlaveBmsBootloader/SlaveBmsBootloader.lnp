@@ -3,7 +3,6 @@
 "slavebmsbootloader\main.o"
 "slavebmsbootloader\gpio.o"
 "slavebmsbootloader\can.o"
-"slavebmsbootloader\crc.o"
 "slavebmsbootloader\stm32f2xx_it.o"
 "slavebmsbootloader\stm32f2xx_hal_msp.o"
 "slavebmsbootloader\stm32f2xx_hal_can.o"

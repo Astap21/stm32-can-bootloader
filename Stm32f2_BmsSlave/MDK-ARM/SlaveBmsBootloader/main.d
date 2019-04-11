@@ -28,6 +28,5 @@ slavebmsbootloader\main.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_fla
 slavebmsbootloader\main.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr.h
 slavebmsbootloader\main.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr_ex.h
 slavebmsbootloader\main.o: ../Inc/can.h
-slavebmsbootloader\main.o: ../Inc/crc.h
 slavebmsbootloader\main.o: ../Inc/gpio.h
 slavebmsbootloader\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

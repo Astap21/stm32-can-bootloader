@@ -310,7 +310,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -401,11 +401,6 @@
               <FileName>can.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/can.c</FilePath>
-            </File>
-            <File>
-              <FileName>crc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/crc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f2xx_it.c</FileName>
