@@ -5,6 +5,7 @@
 "slavebmsbootloader\can.o"
 "slavebmsbootloader\stm32f2xx_it.o"
 "slavebmsbootloader\stm32f2xx_hal_msp.o"
+"slavebmsbootloader\flashread.o"
 "slavebmsbootloader\stm32f2xx_hal_can.o"
 "slavebmsbootloader\stm32f2xx_hal_crc.o"
 "slavebmsbootloader\stm32f2xx_hal_tim.o"

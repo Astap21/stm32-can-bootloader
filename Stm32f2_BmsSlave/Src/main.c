@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+#include "flashRead.h"
 
 #define  WAIT_HOST    0
 #define IDLE        1
@@ -98,7 +99,6 @@ void SystemClock_Config(void);
    одинарных, двойных, пакетных и всех нечетных ошибок
 */
 uint32_t Crc32(const uint8_t *buf, uint32_t len);
-uint32_t flash_read(uint32_t address);
 void JumpToApplication(void);
 void TransmitResponsePacket(uint8_t response);
 /* USER CODE END PFP */
@@ -112,7 +112,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
   slaveId = (uint8_t)flash_read(slaveIdAdrressInFlash);
-	if (slaveId == 0xFF) slaveId =0;
+	if (slaveId == 0xFF || slaveId > 0xF) slaveId = 0;
 	deviceCanId = 0x780 + slaveId;
   /* USER CODE END 1 */
 
@@ -327,10 +327,6 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* CanHandle)
 
   HAL_GPIO_TogglePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
   HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
-}
-//функциz для чтения данных из флеш
-uint32_t flash_read(uint32_t address) {
-	return (*(__IO uint32_t*) address);
 }
 const uint32_t Crc32Table[256] = {
     0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA,

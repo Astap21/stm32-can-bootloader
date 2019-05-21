@@ -30,3 +30,4 @@ slavebmsbootloader\main.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr
 slavebmsbootloader\main.o: ../Inc/can.h
 slavebmsbootloader\main.o: ../Inc/gpio.h
 slavebmsbootloader\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+slavebmsbootloader\main.o: ../Inc/flashRead.h

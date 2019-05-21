@@ -1,6 +1,6 @@
 Dependencies for Project 'SlaveBmsBootloader', Target 'SlaveBmsBootloader': (DO NOT MODIFY !)
 F (startup_stm32f205xx.s)(0x5C9B6F7D)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Users\astapenko\Workspace\Keil_v5\stm32-can-bootloader\Stm32f2_BmsSlave\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include--pd "__UVISION_VERSION SETA 520" --pd "_RTE_ SETA 1" --pd "STM32F205xx SETA 1"--list startup_stm32f205xx.lst --xref -o slavebmsbootloader\startup_stm32f205xx.o --depend slavebmsbootloader\startup_stm32f205xx.d)
-F (../Src/main.c)(0x5CAF4C64)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O2 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I ../Drivers/CMSIS/Include-I C:\Users\astapenko\Workspace\Keil_v5\stm32-can-bootloader\Stm32f2_BmsSlave\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o slavebmsbootloader\main.o --omf_browse slavebmsbootloader\main.crf --depend slavebmsbootloader\main.d)
+F (../Src/main.c)(0x5CE3D64C)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O2 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I ../Drivers/CMSIS/Include-I C:\Users\astapenko\Workspace\Keil_v5\stm32-can-bootloader\Stm32f2_BmsSlave\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o slavebmsbootloader\main.o --omf_browse slavebmsbootloader\main.crf --depend slavebmsbootloader\main.d)
 I (../Inc/main.h)(0x5C9B6F7C)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5C6BC186)
 I (../Inc/stm32f2xx_hal_conf.h)(0x5C9B6F7C)
@@ -31,6 +31,7 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr_ex.h)(0x5C6BC186)
 I (../Inc/can.h)(0x5C9B6F7B)
 I (../Inc/gpio.h)(0x5C9B6F7B)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x56FE892E)
+I (../Inc/flashRead.h)(0x5CE3D5C9)
 F (../Src/gpio.c)(0x5C9B6F7B)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O2 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I ../Drivers/CMSIS/Include-I C:\Users\astapenko\Workspace\Keil_v5\stm32-can-bootloader\Stm32f2_BmsSlave\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o slavebmsbootloader\gpio.o --omf_browse slavebmsbootloader\gpio.crf --depend slavebmsbootloader\gpio.d)
 I (../Inc/gpio.h)(0x5C9B6F7B)
 I (../Inc/main.h)(0x5C9B6F7C)
@@ -120,6 +121,34 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr_ex.h)(0x5C6BC186)
 I (../Inc/stm32f2xx_it.h)(0x5C9B6F7C)
 F (../Src/stm32f2xx_hal_msp.c)(0x5C9B6F7C)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O2 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I ../Drivers/CMSIS/Include-I C:\Users\astapenko\Workspace\Keil_v5\stm32-can-bootloader\Stm32f2_BmsSlave\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o slavebmsbootloader\stm32f2xx_hal_msp.o --omf_browse slavebmsbootloader\stm32f2xx_hal_msp.crf --depend slavebmsbootloader\stm32f2xx_hal_msp.d)
 I (../Inc/main.h)(0x5C9B6F7C)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5C6BC186)
+I (../Inc/stm32f2xx_hal_conf.h)(0x5C9B6F7C)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_rcc.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_def.h)(0x5C6BC186)
+I (../Drivers/CMSIS/Device/ST/STM32F2xx/Include/stm32f2xx.h)(0x5C6BC174)
+I (../Drivers/CMSIS/Device/ST/STM32F2xx/Include/stm32f205xx.h)(0x5C6BC173)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x5C6BC185)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE892E)
+I (../Drivers/CMSIS/Include/core_cmInstr.h)(0x5C6BC185)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x5C6BC185)
+I (../Drivers/CMSIS/Include/core_cmFunc.h)(0x5C6BC185)
+I (../Drivers/CMSIS/Device/ST/STM32F2xx/Include/system_stm32f2xx.h)(0x5C6BC174)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x5C6BC186)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x56FE892E)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_rcc_ex.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_gpio.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_gpio_ex.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_dma.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_dma_ex.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_cortex.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_can.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_crc.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_flash.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_flash_ex.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr.h)(0x5C6BC186)
+I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr_ex.h)(0x5C6BC186)
+F (.\flashRead.c)(0x5CE3D5C9)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O2 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc -I ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I ../Drivers/CMSIS/Include-I C:\Users\astapenko\Workspace\Keil_v5\stm32-can-bootloader\Stm32f2_BmsSlave\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o slavebmsbootloader\flashread.o --omf_browse slavebmsbootloader\flashread.crf --depend slavebmsbootloader\flashread.d)
+I (flashRead.h)(0x5CE3D5C9)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5C6BC186)
 I (../Inc/stm32f2xx_hal_conf.h)(0x5C9B6F7C)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_rcc.h)(0x5C6BC186)
